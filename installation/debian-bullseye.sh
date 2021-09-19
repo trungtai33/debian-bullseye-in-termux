@@ -208,9 +208,6 @@ EOF
 cat <<- EOF > "$PREFIX/share/$directory/proc/.version"
 Linux version 5.10.0 (build@debian) (gcc version 4.9 (GCC)) #1 SMP Thursday August 14 12:00:00 UTC 2020
 EOF
-cat <<- EOF > "$PREFIX/share/$directory/proc/.osrelease"
-5.10.0
-EOF
 bin="start-debian-bullseye"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Writing $bin file...\n\e[0m"
 cat <<- EOF > "$PREFIX/bin/$bin"
@@ -248,7 +245,6 @@ if ! cat /proc/vmstat > /dev/null 2>&1; then
 command+=" --bind=$PREFIX/share/$directory/proc/.vmstat:/proc/vmstat"
 fi
 command+=" --bind=$PREFIX/share/$directory/proc/.version:/proc/version"
-command+=" --bind=$PREFIX/share/$directory/proc/.osrelease:/proc/sys/kernel/osrelease"
 command+=" /usr/bin/env -i"
 command+=" HOME=/root"
 command+=" PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
