@@ -231,16 +231,12 @@ command+=" --bind=/proc/self/fd/1:/dev/stdout"
 commamd+=" --bind=/proc/self/fd/2:/dev/stderr"
 command+=" --bind=/sys"
 command+=" --bind=/data/data/com.termux"
+command+=" --bind=/sdcard"
+command+=" --cwd=/root"
 command+=" --bind=$PREFIX/share/$directory/root:/dev/shm"
-if ! cat /proc/device-tree/model > /dev/null 2>&1; then
 command+=" --bind=$PREFIX/share/$directory/proc/.model:/proc/device-tree/model"
-fi
-if ! cat /proc/version > /dev/null 2>&1; then
 command+=" --bind=$PREFIX/share/$directory/proc/.version:/proc/version"
-fi
-if ! cat /proc/sys/kernel/osrelease > /dev/null 2>&1; then
 command+=" --bind=$PREFIX/share/$directory/proc/.osrelease:/proc/sys/kernel/osrelease"
-fi
 if ! cat /proc/loadavg > /dev/null 2>&1; then
 command+=" --bind=$PREFIX/share/$directory/proc/.loadavg:/proc/loadavg"
 fi
@@ -253,8 +249,6 @@ fi
 if ! cat /proc/vmstat > /dev/null 2>&1; then
 command+=" --bind=$PREFIX/share/$directory/proc/.vmstat:/proc/vmstat"
 fi
-command+=" --bind=/sdcard"
-command+=" --cwd=/root"
 command+=" /usr/bin/env -i"
 command+=" HOME=/root"
 command+=" PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
