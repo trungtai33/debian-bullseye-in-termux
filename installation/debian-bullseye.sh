@@ -45,9 +45,6 @@ cat <<- EOF >> "$PREFIX/share/$directory/etc/group"
 root:x:$gid:
 EOF
 done < <(paste <(id -G | tr ' ' '\n'))
-cat <<- EOF > "$PREFIX/share/$directory/proc/.model"
-$(getprop ro.product.brand) $(getprop ro.product.model)
-EOF
 cat <<- EOF > "$PREFIX/share/$directory/proc/.version"
 Linux version 5.10.0 (build@debian) (gcc version 4.9 (GCC)) #1 SMP Thursday August 14 12:00:00 UTC 2020
 EOF
@@ -211,6 +208,9 @@ balloon_migrate 0
 swap_ra 9661
 swap_ra_hit 7872
 EOF
+cat <<- EOF > "$PREFIX/share/$directory/proc/.model"
+$(getprop ro.product.brand) $(getprop ro.product.model)
+EOF
 bin="start-debian-bullseye"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Writing $bin file...\n\e[0m"
 cat <<- EOF > "$PREFIX/bin/$bin"
@@ -234,7 +234,6 @@ command+=" --bind=/data/data/com.termux"
 command+=" --bind=/sdcard"
 command+=" --cwd=/root"
 command+=" --bind=$PREFIX/share/$directory/root:/dev/shm"
-command+=" --bind=$PREFIX/share/$directory/proc/.model:/proc/device-tree/model"
 command+=" --bind=$PREFIX/share/$directory/proc/.version:/proc/version"
 command+=" --bind=$PREFIX/share/$directory/proc/.osrelease:/proc/sys/kernel/osrelease"
 if ! cat /proc/loadavg > /dev/null 2>&1; then
@@ -249,6 +248,7 @@ fi
 if ! cat /proc/vmstat > /dev/null 2>&1; then
 command+=" --bind=$PREFIX/share/$directory/proc/.vmstat:/proc/vmstat"
 fi
+command+=" --bind=$PREFIX/share/$directory/proc/.model:/proc/device-tree/model"
 command+=" /usr/bin/env -i"
 command+=" HOME=/root"
 command+=" PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
