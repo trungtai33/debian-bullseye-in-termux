@@ -15,8 +15,7 @@ printf "\e[34m[\e[32m*\e[34m]\e[31m Unsupported architecture.\n\n\e[0m"
 exit ;;
 esac
 apt update > /dev/null 2>&1
-yes | apt upgrade > /dev/null 2>&1
-yes | apt install proot > /dev/null 2>&1
+apt install -y proot > /dev/null 2>&1
 tarball="rootfs.tar.xz"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading Debian Bullseye, please wait...\n\n\e[34m"
 curl --fail --retry 5 --location --output "$tarball" \
@@ -47,7 +46,7 @@ root:x:$gid:
 EOF
 done < <(paste <(id -G | tr ' ' '\n'))
 cat <<- EOF > "$PREFIX/share/$directory/proc/.loadavg"
-0.35 0.22 0.05 1/573 7767
+0.35 0.22 0.15 1/573 7767
 EOF
 cat <<- EOF > "$PREFIX/share/$directory/proc/.stat"
 cpu  165542 13183 24203 611072 152293 2164 191340 8252 0 0 0
