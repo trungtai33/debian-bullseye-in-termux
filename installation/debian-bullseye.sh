@@ -15,7 +15,7 @@ printf "\e[34m[\e[32m*\e[34m]\e[31m Unsupported architecture.\n\n\e[0m"
 exit ;;
 esac
 apt update > /dev/null 2>&1
-apt install -y proot > /dev/null 2>&1
+apt install -y proot pulseaudio > /dev/null 2>&1
 tarball="rootfs.tar.xz"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading Debian Bullseye, please wait...\n\n\e[34m"
 curl --fail --retry 5 --location --output "$tarball" \
@@ -162,6 +162,7 @@ bin="start-debian-bullseye"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Writing $bin file...\n\e[0m"
 cat <<- EOF > "$PREFIX/bin/$bin"
 #!/data/data/com.termux/files/usr/bin/bash
+pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" --exit-idle-time="-1"
 unset LD_PRELOAD
 command="proot"
 command+=" --kernel-release=5.10.0"
