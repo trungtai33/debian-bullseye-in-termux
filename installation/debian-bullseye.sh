@@ -15,7 +15,7 @@ printf "\e[34m[\e[32m*\e[34m]\e[31m Unsupported architecture.\n\n\e[0m"
 exit ;;
 esac
 apt update > /dev/null 2>&1
-apt install -y proot > /dev/null 2>&1
+yes | apt install proot > /dev/null 2>&1
 tarball="rootfs.tar.xz"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading Debian Bullseye, please wait...\n\n\e[34m"
 curl --fail --retry 5 --location --output "$tarball" \
@@ -198,10 +198,10 @@ command+=" --bind=$PREFIX/share/$directory/proc/.version:/proc/version"
 command+=" /usr/bin/env -i"
 command+=" HOME=/root"
 command+=" PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-command+=" TERM=$TERM"
+command+=" TERM=\$TERM"
 command+=" LANG=C.UTF-8"
 command+=" /bin/bash --login"
-com="\$@"; [ -z "\$1" ] && exec \$command || \$command -c "\$com"
+cmd="\$@" && [ "\$1" = "\$2" ] && exec \$command || \$command -c "\$cmd"
 EOF
 termux-fix-shebang "$PREFIX/bin/$bin"
 chmod 700 "$PREFIX/bin/$bin"
