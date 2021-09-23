@@ -204,7 +204,7 @@ command+=" PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 command+=" TERM=\${TERM}"
 command+=" LANG=C.UTF-8"
 command+=" /bin/bash --login"
-com="\$@" && [ "\$1" = "\$2" ] && exec \${command} || \${command} -c "\${com}"
+com="\$@" && [ -z "\$1" ] && exec \${command} || \${command} -c "\${com}"
 EOF
 termux-fix-shebang "${PREFIX}/bin/${bin}"
 chmod 700 "${PREFIX}/bin/${bin}"
