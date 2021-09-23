@@ -1,6 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
 directory="debian-bullseye"
-if [ -d "$PREFIX/share/$directory" ]; then
+if [ -d "${PREFIX}/share/${directory}" ]; then
 printf "\n\e[31mError: distribution Debian Bullseye is already installed.\n\n\e[0m"
 exit
 fi
@@ -18,37 +18,40 @@ apt update > /dev/null 2>&1
 yes | apt install proot > /dev/null 2>&1
 tarball="rootfs.tar.xz"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading Debian Bullseye, please wait...\n\n\e[34m"
-curl --fail --retry 5 --location --output "$tarball" \
-"https://github.com/debuerreotype/docker-debian-artifacts/raw/dist-$arch/bullseye/rootfs.tar.xz"
-mkdir -p "$PREFIX/share/$directory"
+curl --fail --retry 5 --location --output "${tarball}" \
+"https://github.com/debuerreotype/docker-debian-artifacts/raw/dist-${arch}/bullseye/rootfs.tar.xz"
+mkdir -p "${PREFIX}/share/${directory}"
 printf "\n\e[34m[\e[32m*\e[34m]\e[36m Installing Debian Bullseye, please wait...\n\e[31m"
-proot --link2symlink tar -xf "$tarball" --directory="$PREFIX/share/$directory" --exclude='dev'||:
-rm -f "$tarball"
+proot --link2symlink tar -xf "${tarball}" --directory="${PREFIX}/share/${directory}" --exclude='dev'||:
+rm -f "${tarball}"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Writing profile file...\n\e[31m"
-cat <<- EOF >> "$PREFIX/share/$directory/etc/profile"
+cat <<- EOF >> "${PREFIX}/share/${directory}/etc/profile"
 export PULSE_SERVER="127.0.0.1"
 export MOZ_FAKE_NO_SANDBOX="1"
 EOF
 printf "\e[34m[\e[32m*\e[34m]\e[36m Writing resolv.conf file (DNS 1.1.1.1/1.0.0.1)...\n\e[31m"
-cat <<- EOF > "$PREFIX/share/$directory/etc/resolv.conf"
+cat <<- EOF > "${PREFIX}/share/${directory}/etc/resolv.conf"
 nameserver 1.1.1.1
 nameserver 1.0.0.1
 EOF
 printf "\e[34m[\e[32m*\e[34m]\e[36m Writing hosts file...\n\e[31m"
-cat <<- EOF > "$PREFIX/share/$directory/etc/hosts"
+cat <<- EOF > "${PREFIX}/share/${directory}/etc/hosts"
 127.0.0.1 localhost
 ::1       ip6-localhost ip6-loopback
 EOF
 printf "\e[34m[\e[32m*\e[34m]\e[36m Writing group file (GIDs)...\n\e[31m"
-while read gid; do
-cat <<- EOF >> "$PREFIX/share/$directory/etc/group"
-root:x:$gid:
+while read group_name group_id; do
+cat <<- EOF >> "${PREFIX}/share/${directory}/etc/group"
+${group_name}:x:${group_id}:
 EOF
-done < <(paste <(id -G | tr ' ' '\n'))
-cat <<- EOF > "$PREFIX/share/$directory/proc/.loadavg"
+cat <<- EOF >> "${PREFIX}/share/${directory}/etc/gshadow"
+${group_name}:*::
+EOF
+done < <(paste <(id -Gn | tr ' ' '\n') <(id -G | tr ' ' '\n'))
+cat <<- EOF > "${PREFIX}/share/${directory}/proc/.loadavg"
 0.35 0.22 0.15 1/573 7767
 EOF
-cat <<- EOF > "$PREFIX/share/$directory/proc/.stat"
+cat <<- EOF > "${PREFIX}/share/${directory}/proc/.stat"
 cpu  165542 13183 24203 611072 152293 68 191340 255 0 0 0
 cpu0 165542 13183 24203 611072 152293 68 191340 255 0 0 0
 intr 815181 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -59,10 +62,10 @@ procs_running 1
 procs_blocked 0
 softirq 1857962 55 2536781 34 1723322 8 2457784 5 1914410
 EOF
-cat <<- EOF > "$PREFIX/share/$directory/proc/.uptime"
+cat <<- EOF > "${PREFIX}/share/${directory}/proc/.uptime"
 11965.80 11411.22
 EOF
-cat <<- EOF > "$PREFIX/share/$directory/proc/.vmstat"
+cat <<- EOF > "${PREFIX}/share/${directory}/proc/.vmstat"
 nr_free_pages 705489
 nr_alloc_batch 0
 nr_inactive_anon 1809
@@ -152,15 +155,15 @@ unevictable_pgs_munlocked 0
 unevictable_pgs_cleared 0
 unevictable_pgs_stranded 0
 EOF
-cat <<- EOF > "$PREFIX/share/$directory/proc/.model"
+cat <<- EOF > "${PREFIX}/share/${directory}/proc/.model"
 $(getprop ro.product.brand) $(getprop ro.product.model)
 EOF
-cat <<- EOF > "$PREFIX/share/$directory/proc/.version"
+cat <<- EOF > "${PREFIX}/share/${directory}/proc/.version"
 Linux version 5.10.0 (termux@debian) (gcc version 4.9 (GCC)) $(uname -v)
 EOF
 bin="start-debian-bullseye"
-printf "\e[34m[\e[32m*\e[34m]\e[36m Writing $bin file...\n\e[0m"
-cat <<- EOF > "$PREFIX/bin/$bin"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Writing ${bin} file...\n\e[0m"
+cat <<- EOF > "${PREFIX}/bin/${bin}"
 #!/data/data/com.termux/files/usr/bin/bash
 unset LD_PRELOAD
 command="proot"
@@ -168,7 +171,7 @@ command+=" --kernel-release=5.10.0"
 command+=" --link2symlink"
 command+=" --kill-on-exit"
 command+=" --root-id"
-command+=" --rootfs=$PREFIX/share/$directory"
+command+=" --rootfs=${PREFIX}/share/${directory}"
 command+=" --cwd=/root"
 command+=" --bind=/dev"
 command+=" --bind=/dev/urandom:/dev/random"
@@ -180,30 +183,30 @@ commamd+=" --bind=/proc/self/fd/2:/dev/stderr"
 command+=" --bind=/sys"
 command+=" --bind=/data/data/com.termux"
 command+=" --bind=/sdcard"
-command+=" --bind=$PREFIX/share/$directory/root:/dev/shm"
+command+=" --bind=${PREFIX}/share/${directory}/root:/dev/shm"
 if ! cat /proc/loadavg > /dev/null 2>&1; then
-command+=" --bind=$PREFIX/share/$directory/proc/.loadavg:/proc/loadavg"
+command+=" --bind=${PREFIX}/share/${directory}/proc/.loadavg:/proc/loadavg"
 fi
 if ! cat /proc/stat > /dev/null 2>&1; then
-command+=" --bind=$PREFIX/share/$directory/proc/.stat:/proc/stat"
+command+=" --bind=${PREFIX}/share/${directory}/proc/.stat:/proc/stat"
 fi
 if ! cat /proc/uptime > /dev/null 2>&1; then
-command+=" --bind=$PREFIX/share/$directory/proc/.uptime:/proc/uptime"
+command+=" --bind=${PREFIX}/share/${directory}/proc/.uptime:/proc/uptime"
 fi
 if ! cat /proc/vmstat > /dev/null 2>&1; then
-command+=" --bind=$PREFIX/share/$directory/proc/.vmstat:/proc/vmstat"
+command+=" --bind=${PREFIX}/share/${directory}/proc/.vmstat:/proc/vmstat"
 fi
-command+=" --bind=$PREFIX/share/$directory/proc/.model:/proc/device-tree/model"
-command+=" --bind=$PREFIX/share/$directory/proc/.version:/proc/version"
+command+=" --bind=${PREFIX}/share/${directory}/proc/.model:/proc/device-tree/model"
+command+=" --bind=${PREFIX}/share/${directory}/proc/.version:/proc/version"
 command+=" /usr/bin/env -i"
 command+=" HOME=/root"
 command+=" PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-command+=" TERM=\$TERM"
+command+=" TERM=\${TERM}"
 command+=" LANG=C.UTF-8"
 command+=" /bin/bash --login"
-cmd="\$@" && [ "\$1" = "\$2" ] && exec \$command || \$command -c "\$cmd"
+com="\$@" && [ "\$1" = "\$2" ] && exec \${command} || \${command} -c "\${com}"
 EOF
-termux-fix-shebang "$PREFIX/bin/$bin"
-chmod 700 "$PREFIX/bin/$bin"
+termux-fix-shebang "${PREFIX}/bin/${bin}"
+chmod 700 "${PREFIX}/bin/${bin}"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Installed successfully.\n\n\e[0m"
-printf "\e[36mNow run \e[32m$bin\e[36m to login.\n\n\e[0m"
+printf "\e[36mNow run \e[32m${bin}\e[36m to login.\n\n\e[0m"
