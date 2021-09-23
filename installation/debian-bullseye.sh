@@ -29,10 +29,10 @@ cat <<- EOF >> "${PREFIX}/share/${directory}/etc/profile"
 export PULSE_SERVER="127.0.0.1"
 export MOZ_FAKE_NO_SANDBOX="1"
 EOF
-printf "\e[34m[\e[32m*\e[34m]\e[36m Writing resolv.conf file (DNS 1.1.1.1/1.0.0.1)...\n\e[31m"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Writing resolv.conf file (DNS 8.8.8.8/8.8.4.4)...\n\e[31m"
 cat <<- EOF > "${PREFIX}/share/${directory}/etc/resolv.conf"
-nameserver 1.1.1.1
-nameserver 1.0.0.1
+nameserver 8.8.8.8
+nameserver 8.8.4.4
 EOF
 printf "\e[34m[\e[32m*\e[34m]\e[36m Writing hosts file...\n\e[31m"
 cat <<- EOF > "${PREFIX}/share/${directory}/etc/hosts"
