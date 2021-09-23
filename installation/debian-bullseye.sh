@@ -208,5 +208,5 @@ com="\$@" && [ -z "\$1" ] && exec \${command} || \${command} -c "\${com}"
 EOF
 termux-fix-shebang "${PREFIX}/bin/${bin}"
 chmod 700 "${PREFIX}/bin/${bin}"
-printf "\e[34m[\e[32m*\e[34m]\e[36m Installed successfully.\n\n\e[0m"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Installation successfully.\n\n\e[0m"
 printf "\e[36mNow run \e[32m${bin}\e[36m to login.\n\n\e[0m"
