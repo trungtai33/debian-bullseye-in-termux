@@ -39,7 +39,7 @@ cat <<- EOF > "${PREFIX}/share/${directory}/etc/hosts"
 127.0.0.1 localhost
 ::1       ip6-localhost ip6-loopback
 EOF
-printf "\e[34m[\e[32m*\e[34m]\e[36m Writing group file (GIDs)...\n\e[31m"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Adding Android groups...\n\e[31m"
 while read group_name group_id; do
 cat <<- EOF >> "${PREFIX}/share/${directory}/etc/group"
 ${group_name}:x:${group_id}:
@@ -162,7 +162,6 @@ cat <<- EOF > "${PREFIX}/share/${directory}/proc/.version"
 Linux version 5.10.0 (termux@debian) (gcc version 4.9 (GCC)) $(uname -v)
 EOF
 bin="start-debian-bullseye"
-printf "\e[34m[\e[32m*\e[34m]\e[36m Writing ${bin} file...\n\e[0m"
 cat <<- EOF > "${PREFIX}/bin/${bin}"
 #!/data/data/com.termux/files/usr/bin/bash
 unset LD_PRELOAD
