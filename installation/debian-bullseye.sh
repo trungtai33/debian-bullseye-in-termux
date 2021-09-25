@@ -39,8 +39,8 @@ cat <<- EOF > "${PREFIX}/share/${directory}/etc/hosts"
 127.0.0.1 localhost
 ::1       ip6-localhost ip6-loopback
 EOF
-printf "\e[34m[\e[32m*\e[34m]\e[36m Adding Android ID groups...\n\e[31m"
 while read group_name group_id; do
+printf "\e[34m[\e[32m*\e[34m]\e[36m Adding (${group_name}) for group ID (${group_id})...\n\e[31m"
 cat <<- EOF >> "${PREFIX}/share/${directory}/etc/group"
 ${group_name}:x:${group_id}:
 EOF
