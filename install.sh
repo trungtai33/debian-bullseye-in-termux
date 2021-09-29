@@ -161,7 +161,7 @@ cat <<- EOF > "${PREFIX}/share/${directory}/proc/.version"
 Linux version 5.10.0 (termux@debian) (gcc version 4.9 (GCC)) $(uname -v)
 EOF
 bin="start-debian-bullseye"
-printf "\e[34m[\e[32m*\e[34m]\e[36m Writing ${bin} file...\n\e[31m"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Writing ${bin} file...\n\e[0m"
 cat <<- EOF > "${PREFIX}/bin/${bin}"
 #!/data/data/com.termux/files/usr/bin/bash
 unset LD_PRELOAD
