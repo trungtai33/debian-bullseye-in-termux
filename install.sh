@@ -17,14 +17,14 @@ esac
 apt update > /dev/null 2>&1
 apt install -y proot > /dev/null 2>&1
 tarball="rootfs.tar.xz"
-distro="Debian Bullseye"
-printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading ${distro}, please wait...\n\n\e[34m"
+distro_name="Debian Bullseye"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading ${distro_name}, please wait...\n\n\e[34m"
 curl --fail --retry 5 --location --output "${tarball}" \
 "https://github.com/debuerreotype/docker-debian-artifacts/raw/dist-${arch}/bullseye/rootfs.tar.xz"
 mkdir -p "${PREFIX}/share/${directory}"
-printf "\n\e[34m[\e[32m*\e[34m]\e[36m Installing ${distro}, please wait...\n\e[31m"
+printf "\n\e[34m[\e[32m*\e[34m]\e[36m Installing ${distro_name}, please wait...\n\e[31m"
 proot --link2symlink tar -xf "${tarball}" --directory="${PREFIX}/share/${directory}" --exclude='dev'||:
-printf "\e[34m[\e[32m*\e[34m]\e[36m Setting up ${distro}, please wait...\n\e[31m"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Setting up ${distro_name}, please wait...\n\e[31m"
 rm -f "${tarball}"
 cat <<- EOF >> "${PREFIX}/share/${directory}/etc/profile"
 export PULSE_SERVER="127.0.0.1"
