@@ -1,7 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
 directory="debian-bullseye"
 distro_name="Debian Bullseye"
-tarball_name="rootfs.tar.xz"
 if [ -d "${PREFIX}/share/${directory}" ]; then
 printf "\n\e[31mError: distribution ${distro_name} is already installed.\n\n\e[0m"
 exit
@@ -18,15 +17,16 @@ exit ;;
 esac
 apt update > /dev/null 2>&1
 apt install -y proot > /dev/null 2>&1
-rm -f "${tarball_name}"
+tarball="rootfs.tar.xz"
+rm -f "${tarball}"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading ${distro_name}, please wait...\n\n\e[34m"
-curl --fail --retry 5 --location --output "${tarball_name}" \
+curl --fail --retry 5 --location --output "${tarball}" \
 "https://github.com/debuerreotype/docker-debian-artifacts/raw/dist-${arch}/bullseye/rootfs.tar.xz"
 mkdir -p "${PREFIX}/share/${directory}"
 printf "\n\e[34m[\e[32m*\e[34m]\e[36m Installing ${distro_name}, please wait...\n\e[31m"
-proot --link2symlink tar -xf "${tarball_name}" --directory="${PREFIX}/share/${directory}" --exclude='dev'||:
+proot --link2symlink tar -xf "${tarball}" --directory="${PREFIX}/share/${directory}" --exclude='dev'||:
 printf "\e[34m[\e[32m*\e[34m]\e[36m Setting up ${distro_name}, please wait...\n\e[31m"
-rm -f "${tarball_name}"
+rm -f "${tarball}"
 cat <<- EOF >> "${PREFIX}/share/${directory}/etc/profile"
 export PULSE_SERVER="127.0.0.1"
 export MOZ_FAKE_NO_SANDBOX="1"
