@@ -18,6 +18,7 @@ esac
 apt update > /dev/null 2>&1
 apt install -y proot > /dev/null 2>&1
 tarball="rootfs.tar.xz"
+rm -f "${tarball}"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading ${distro_name}, please wait...\n\n\e[34m"
 curl --fail --retry 5 --location --output "${tarball}" \
 "https://github.com/debuerreotype/docker-debian-artifacts/raw/dist-${arch}/bullseye/rootfs.tar.xz"
@@ -159,8 +160,7 @@ EOF
 cat <<- EOF > "${PREFIX}/share/${directory}/proc/.version"
 Linux version 5.10.0 (termux@debian) (gcc version 4.9 (GCC)) $(uname -v)
 EOF
-bin="start-${directory}"
-cat <<- EOF > "${PREFIX}/bin/${bin}"
+cat <<- EOF > "${PREFIX}/bin/start-${directory}"
 #!/data/data/com.termux/files/usr/bin/bash
 unset LD_PRELOAD
 command="proot"
@@ -204,7 +204,7 @@ command+=" LANG=C.UTF-8"
 command+=" /bin/bash --login"
 com="\$@" && [ -z "\$1" ] && exec \$command || \$command -c "\$com"
 EOF
-termux-fix-shebang "${PREFIX}/bin/${bin}"
-chmod 700 "${PREFIX}/bin/${bin}"
+termux-fix-shebang "${PREFIX}/bin/start-${directory}"
+chmod 700 "${PREFIX}/bin/start-${directory}"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Installation successfully.\n\n\e[0m"
-printf "\e[36mNow run \e[32m${bin}\e[36m to login.\n\n\e[0m"
+printf "\e[36mNow run \e[32mstart-${directory}\e[36m to login.\n\n\e[0m"
