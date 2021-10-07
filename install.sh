@@ -20,7 +20,7 @@ apt install -y proot > /dev/null 2>&1
 tarball="rootfs.tar.xz"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading ${distro_name}, please wait...\n\n\e[34m"
 curl --fail --retry 5 --location --output "${tarball}" \
-"https://github.com/debuerreotype/docker-debian-artifacts/raw/dist-${arch}/bullseye/rootfs.tar.xz"
+"https://raw.githubusercontent.com/debuerreotype/docker-debian-artifacts/dist-${arch}/bullseye/rootfs.tar.xz"
 mkdir -p "${PREFIX}/share/${directory}"
 printf "\n\e[34m[\e[32m*\e[34m]\e[36m Installing ${distro_name}, please wait...\n\e[31m"
 proot --link2symlink tar -xf "${tarball}" --directory="${PREFIX}/share/${directory}" --exclude='dev'||:
