@@ -26,6 +26,13 @@ printf "\n\e[34m[\e[32m*\e[34m]\e[36m Installing ${distro_name}, please wait...\
 proot --link2symlink tar -xf "${tarball}" --directory="${PREFIX}/share/${directory}" --exclude='dev'||:
 printf "\e[34m[\e[32m*\e[34m]\e[36m Setting up ${distro_name}, please wait...\n\e[31m"
 rm -f "${tarball}"
+libgcc_s_path="/$(cd ${PREFIX}/share/${directory}; find usr/lib -name libgcc_s.so.1)"
+if [ "${libgcc_s_path}" != "/" ]; then
+cat <<- EOF > "${PREFIX}/share/${directory}/etc/ld.so.preload"
+${libgcc_s_path}
+EOF
+chmod 644 "${PREFIX}/share/${directory}/etc/ld.so.preload"
+fi
 cat <<- EOF >> "${PREFIX}/share/${directory}/etc/profile"
 export PULSE_SERVER="127.0.0.1"
 export MOZ_FAKE_NO_SANDBOX="1"
