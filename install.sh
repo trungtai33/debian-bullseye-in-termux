@@ -7,10 +7,14 @@ exit
 fi
 printf "\n\e[34m[\e[32m*\e[34m]\e[36m Checking device architecture...\n\e[0m"
 case $(uname -m) in
-aarch64) arch="arm64v8" ;;
-armv7l|armv8l) arch="arm32v7" ;;
-i686) arch="i386" ;;
-x86_64) arch="amd64" ;;
+aarch64) arch="arm64v8"
+libgcc_s_path="/lib/aarch64-linux-gnu/libgcc_s.so.1" ;;
+armv7l|armv8l) arch="arm32v7"
+libgcc_s_path="/lib/arm-linux-gnueabihf/libgcc_s.so.1" ;;
+i686) arch="i386"
+libgcc_s_path="/lib/i386-linux-gnu/libgcc_s.so.1" ;;
+x86_64) arch="amd64"
+libgcc_s_path="/lib/x86_64-linux-gnu/libgcc_s.so.1" ;;
 *)
 printf "\e[34m[\e[32m*\e[34m]\e[31m Unsupported architecture.\n\n\e[0m"
 exit ;;
@@ -26,13 +30,9 @@ printf "\n\e[34m[\e[32m*\e[34m]\e[36m Installing ${distro_name}, please wait...\
 proot --link2symlink tar -xf "${tarball}" --directory="${PREFIX}/share/${directory}" --exclude='dev'||:
 printf "\e[34m[\e[32m*\e[34m]\e[36m Setting up ${distro_name}, please wait...\n\e[31m"
 rm -f "${tarball}"
-libgcc_s_path="/$(cd ${PREFIX}/share/${directory} && find usr/lib -name libgcc_s.so.1)"
-if [ "${libgcc_s_path}" != "/" ]; then
 cat <<- EOF > "${PREFIX}/share/${directory}/etc/ld.so.preload"
 ${libgcc_s_path}
 EOF
-chmod 644 "${PREFIX}/share/${directory}/etc/ld.so.preload"
-fi
 cat <<- EOF >> "${PREFIX}/share/${directory}/etc/profile"
 export PULSE_SERVER="127.0.0.1"
 export MOZ_FAKE_NO_SANDBOX="1"
