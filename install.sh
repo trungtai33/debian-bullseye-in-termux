@@ -8,13 +8,13 @@ fi
 printf "\n\e[34m[\e[32m*\e[34m]\e[36m Checking device architecture...\n\e[0m"
 case $(uname -m) in
 aarch64) arch="arm64v8"
-preload="aarch64-linux-gnu" ;;
+path="aarch64-linux-gnu" ;;
 armv7l|armv8l) arch="arm32v7"
-preload="arm-linux-gnueabihf" ;;
+path="arm-linux-gnueabihf" ;;
 i686) arch="i386"
-preload="i386-linux-gnu" ;;
+path="i386-linux-gnu" ;;
 x86_64) arch="amd64"
-preload="x86_64-linux-gnu" ;;
+path="x86_64-linux-gnu" ;;
 *)
 printf "\e[34m[\e[32m*\e[34m]\e[31m Unsupported architecture.\n\n\e[0m"
 exit ;;
@@ -31,7 +31,7 @@ proot --link2symlink tar -xf "${tarball}" --directory="${PREFIX}/share/${directo
 printf "\e[34m[\e[32m*\e[34m]\e[36m Setting up ${distro_name}, please wait...\n\e[31m"
 rm -f "${tarball}"
 cat <<- EOF > "${PREFIX}/share/${directory}/etc/ld.so.preload"
-/lib/${preload}/libgcc_s.so.1
+/lib/${path}/libgcc_s.so.1
 EOF
 cat <<- EOF >> "${PREFIX}/share/${directory}/etc/profile"
 export PULSE_SERVER="127.0.0.1"
