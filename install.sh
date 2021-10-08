@@ -23,12 +23,16 @@ apt update > /dev/null 2>&1
 apt install -y proot > /dev/null 2>&1
 tarball="rootfs.tar.xz"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading ${distro_name}, please wait...\n\n\e[34m"
-curl --fail --retry 5 --location --output "${tarball}" \
-"https://raw.githubusercontent.com/debuerreotype/docker-debian-artifacts/dist-${arch}/bullseye/rootfs.tar.xz"
+if ! curl --fail --retry 5 --location --output "${tarball}" \
+"https://raw.githubusercontent.com/debuerreotype/docker-debian-artifacts/dist-${arch}/bullseye/rootfs.tar.xz"; then
+rm -f "${tarball}"
+printf "\n\e[34m[\e[32m*\e[34m]\e[36m Download failure, please check your network connection.\n\n\e[0m"
+exit
+fi
 mkdir -p "${PREFIX}/share/${directory}"
-printf "\n\e[34m[\e[32m*\e[34m]\e[36m Installing ${distro_name}, please wait...\n\e[31m"
+printf "\n\e[34m[\e[32m*\e[34m]\e[36m Installing ${distro_name}, please wait...\n\e[0m"
 proot --link2symlink tar -xf "${tarball}" --directory="${PREFIX}/share/${directory}" --exclude='dev'||:
-printf "\e[34m[\e[32m*\e[34m]\e[36m Setting up ${distro_name}, please wait...\n\e[31m"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Setting up ${distro_name}, please wait...\n\e[0m"
 rm -f "${tarball}"
 cat <<- EOF > "${PREFIX}/share/${directory}/etc/ld.so.preload"
 /lib/${platform}/libgcc_s.so.1
