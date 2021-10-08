@@ -25,7 +25,7 @@ tarball="rootfs.tar.xz"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading ${distro_name}, please wait...\n\n\e[34m"
 if ! curl --fail --retry 5 --location --output "${tarball}" \
 "https://raw.githubusercontent.com/debuerreotype/docker-debian-artifacts/dist-${arch}/bullseye/rootfs.tar.xz"; then
-printf "\n\e[34m[\e[32m*\e[34m]\e[36m Download failure, please check your network connection.\n\n\e[0m"
+printf "\n\e[34m[\e[32m*\e[34m]\e[31m Download failed, please check your network connection.\n\n\e[0m"
 rm -f "${tarball}"
 exit
 fi
