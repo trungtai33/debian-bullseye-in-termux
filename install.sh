@@ -168,7 +168,7 @@ cat <<- EOF > "${PREFIX}/share/${directory}/proc/.model"
 $(getprop ro.product.brand) $(getprop ro.product.model)
 EOF
 cat <<- EOF > "${PREFIX}/share/${directory}/proc/.version"
-Linux version 5.10.0 (termux@debian) (gcc version 4.9 (GCC)) $(uname -v)
+Linux version 5.10.0 (termux@android) (gcc version 4.9 (GCC)) $(uname -v)
 EOF
 cat <<- EOF > "${PREFIX}/bin/start-${directory}"
 #!/data/data/com.termux/files/usr/bin/bash
