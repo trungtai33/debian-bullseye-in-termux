@@ -7,13 +7,17 @@ exit
 fi
 printf "\n\e[34m[\e[32m*\e[34m]\e[36m Checking device architecture...\n\e[0m"
 case $(uname -m) in
-aarch64) arch="arm64v8"
+aarch64)
+arch="arm64v8"
 multiarch="aarch64-linux-gnu" ;;
-armv7l|armv8l) arch="arm32v7"
+armv7l|armv8l)
+arch="arm32v7"
 multiarch="arm-linux-gnueabihf" ;;
-i686) arch="i386"
+i686)
+arch="i386"
 multiarch="i386-linux-gnu" ;;
-x86_64) arch="amd64"
+x86_64)
+arch="amd64"
 multiarch="x86_64-linux-gnu" ;;
 *)
 printf "\e[34m[\e[32m*\e[34m]\e[31m Unsupported architecture.\n\n\e[0m"
