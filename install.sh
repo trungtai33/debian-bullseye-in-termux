@@ -1,8 +1,8 @@
 #!/data/data/com.termux/files/usr/bin/bash
 directory="debian-bullseye"
-distro_name="Debian Bullseye"
+distribution="Debian Bullseye"
 if [ -d "${PREFIX}/share/${directory}" ]; then
-printf "\n\e[31mError: distribution ${distro_name} is already installed.\n\n\e[0m"
+printf "\n\e[31mError: distribution ${distribution} is already installed.\n\n\e[0m"
 exit
 fi
 printf "\n\e[34m[\e[32m*\e[34m]\e[36m Checking device architecture...\n\e[0m"
@@ -17,18 +17,18 @@ esac
 apt update > /dev/null 2>&1
 apt install -y proot > /dev/null 2>&1
 tarball="rootfs.tar.xz"
-printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading ${distro_name}, please wait...\n\n\e[34m"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading ${distribution}, please wait...\n\n\e[34m"
 if ! curl --fail --retry 5 --location --output "${tarball}" \
 "https://raw.githubusercontent.com/debuerreotype/docker-debian-artifacts/dist-${arch}/bullseye/rootfs.tar.xz"; then
 printf "\n\e[34m[\e[32m*\e[34m]\e[31m Download failed, please check your network connection.\n\n\e[0m"
 rm -f "${tarball}"
 exit
 fi
-printf "\n\e[34m[\e[32m*\e[34m]\e[36m Installing ${distro_name}, please wait...\n\e[0m"
+printf "\n\e[34m[\e[32m*\e[34m]\e[36m Installing ${distribution}, please wait...\n\e[0m"
 mkdir -p "${PREFIX}/share/${directory}"
 proot --link2symlink tar -xf "${tarball}" --directory="${PREFIX}/share/${directory}" --exclude='dev'||:
 rm -f "${tarball}"
-printf "\e[34m[\e[32m*\e[34m]\e[36m Setting up ${distro_name}, please wait...\n\e[0m"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Setting up ${distribution}, please wait...\n\e[0m"
 cat <<- EOF > "${PREFIX}/share/${directory}/etc/ld.so.preload"
 /lib/${multiarch}/libgcc_s.so.1
 EOF
