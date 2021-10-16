@@ -34,7 +34,6 @@ cat <<- EOF > "${PREFIX}/share/${directory}/etc/ld.so.preload"
 EOF
 cat <<- EOF >> "${PREFIX}/share/${directory}/etc/profile"
 export LANG="C.UTF-8"
-export PREFIX="${PREFIX}"
 export TMPDIR="/tmp"
 export PULSE_SERVER="127.0.0.1"
 export MOZ_FAKE_NO_SANDBOX="1"
