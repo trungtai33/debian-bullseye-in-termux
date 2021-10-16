@@ -33,6 +33,10 @@ cat <<- EOF > "${PREFIX}/share/${directory}/etc/ld.so.preload"
 /lib/${multiarch}/libgcc_s.so.1
 EOF
 cat <<- EOF >> "${PREFIX}/share/${directory}/etc/profile"
+export LANG="C.UTF-8"
+export TERM="${TERM-xterm-256color}"
+export PREFIX="/data/data/com.termux/files/usr"
+export TMPDIR="/tmp"
 export PULSE_SERVER="127.0.0.1"
 export MOZ_FAKE_NO_SANDBOX="1"
 EOF
