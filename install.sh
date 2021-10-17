@@ -33,7 +33,7 @@ cat <<- EOF > "${PREFIX}/share/${directory}/etc/ld.so.preload"
 /lib/${multiarch}/libgcc_s.so.1
 EOF
 cat <<- EOF > "${PREFIX}/share/${directory}/etc/profile.d/export.sh"
-export LANG="en_US.UTF-8"
+export LANG="C.UTF-8"
 export PULSE_SERVER="127.0.0.1"
 export MOZ_FAKE_NO_SANDBOX="1"
 EOF
