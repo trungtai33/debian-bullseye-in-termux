@@ -34,7 +34,6 @@ cat <<- EOF > "${PREFIX}/share/${directory}/etc/ld.so.preload"
 EOF
 cat <<- EOF >> "${PREFIX}/share/${directory}/etc/profile"
 export LANG="C.UTF-8"
-export TMPDIR="/tmp"
 export PULSE_SERVER="127.0.0.1"
 export MOZ_FAKE_NO_SANDBOX="1"
 EOF
@@ -203,11 +202,9 @@ fi
 command+=" --bind=${PREFIX}/share/${directory}/proc/.model:/proc/device-tree/model"
 command+=" --bind=${PREFIX}/share/${directory}/proc/.version:/proc/version"
 command+=" /usr/bin/env -i"
-command+=" HOME=/root"
-command+=" LANG=C.UTF-8"
 command+=" PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 command+=" TERM=\$TERM"
-command+=" TMPDIR=/tmp"
+command+=" HOME=/root"
 command+=" /bin/bash --login"
 com="\$@"; [ -z "\$1" ] && exec \$command || \$command -c "\$com"
 EOF
