@@ -33,9 +33,9 @@ cat <<- EOF > "${PREFIX}/share/${directory}/etc/ld.so.preload"
 /lib/${multiarch}/libgcc_s.so.1
 EOF
 cat <<- EOF >> "${PREFIX}/share/${directory}/etc/profile"
-export LANG="C.UTF-8"
 export PULSE_SERVER="127.0.0.1"
 export MOZ_FAKE_NO_SANDBOX="1"
+export LANG="C.UTF-8"
 EOF
 cat <<- EOF > "${PREFIX}/share/${directory}/etc/resolv.conf"
 nameserver 8.8.8.8
@@ -202,9 +202,10 @@ fi
 command+=" --bind=${PREFIX}/share/${directory}/proc/.model:/proc/device-tree/model"
 command+=" --bind=${PREFIX}/share/${directory}/proc/.version:/proc/version"
 command+=" /usr/bin/env -i"
+command+=" HOME=/root"
 command+=" PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 command+=" TERM=\$TERM"
-command+=" HOME=/root"
+command+=" LANG=C.UTF-8"
 command+=" /bin/bash --login"
 com="\$@"; [ -z "\$1" ] && exec \$command || \$command -c "\$com"
 EOF
