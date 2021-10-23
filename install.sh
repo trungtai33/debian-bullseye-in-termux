@@ -186,7 +186,7 @@ command+=" --bind=/proc/self/fd/2:/dev/stderr"
 command+=" --bind=/sys"
 command+=" --bind=/sdcard"
 command+=" --bind=/data/data/com.termux"
-command+=" --bind=${PREFIX}/share/${directory}/root:/dev/shm"
+command+=" --bind=${PREFIX}/share/${directory}/tmp:/dev/shm"
 if ! cat /proc/loadavg > /dev/null 2>&1; then
 command+=" --bind=${PREFIX}/share/${directory}/proc/.loadavg:/proc/loadavg"
 fi
@@ -204,7 +204,7 @@ command+=" --bind=${PREFIX}/share/${directory}/proc/.version:/proc/version"
 command+=" /usr/bin/env -i"
 command+=" TERM=\$TERM"
 command+=" /bin/su --login"
-com="\$@"; [ -z "\$1" ] && exec \$command root || \$command "\$com"
+com="\$@"; [ -z "\$1" ] && exec \$command || \$command "\$com"
 EOF
 termux-fix-shebang "${PREFIX}/bin/start-${directory}"
 chmod 700 "${PREFIX}/bin/start-${directory}"
