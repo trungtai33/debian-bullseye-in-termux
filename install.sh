@@ -54,7 +54,7 @@ ${group_name}:!::
 EOF
 done < <(paste <(id -Gn | tr ' ' '\n') <(id -G | tr ' ' '\n'))
 cat <<- EOF > "${PREFIX}/share/${directory}/proc/.loadavg"
-0.35 0.22 0.15 1/573 7767
+0.35 0.22 0.15 1/575 7767
 EOF
 cat <<- EOF > "${PREFIX}/share/${directory}/proc/.stat"
 cpu  265542 13183 24203 611072 152293 68 191340 255 0 0 0
