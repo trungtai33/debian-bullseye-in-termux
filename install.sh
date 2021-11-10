@@ -207,5 +207,5 @@ com="\$@"; [ -z "\$1" ] && exec \$command || \$command "\$com"
 EOF
 termux-fix-shebang "${PREFIX}/bin/start-${directory}"
 chmod 700 "${PREFIX}/bin/start-${directory}"
-printf "\e[34m[\e[32m*\e[34m]\e[36m Installation successfully.\n\n\e[0m"
-printf "\e[36mNow run \e[32mstart-${directory}\e[36m to login.\n\n\e[0m"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Installation finished.\n\n\e[0m"
+printf "\e[36mNow run '\e[32mstart-${directory}\e[36m' to login.\n\n\e[0m"
