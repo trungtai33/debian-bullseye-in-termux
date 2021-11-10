@@ -8,4 +8,4 @@ fi
 printf "\n\e[34m[\e[32m*\e[34m]\e[36m Uninstalling ${distribution}, please wait...\n\e[0m"
 rm -rf "${PREFIX}/share/${directory}"
 rm -f "${PREFIX}/bin/start-${directory}"
-printf "\e[34m[\e[32m*\e[34m]\e[36m Uninstall successfully.\n\n\e[0m"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Uninstall finished.\n\n\e[0m"
