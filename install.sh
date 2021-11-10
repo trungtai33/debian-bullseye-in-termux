@@ -28,7 +28,6 @@ printf "\n\e[34m[\e[32m*\e[34m]\e[36m Installing ${distribution}, please wait...
 mkdir -p "${PREFIX}/share/${directory}"
 proot --link2symlink tar -xf "${tarball}" --directory="${PREFIX}/share/${directory}" --exclude='dev'||:
 rm -f "${tarball}"
-printf "\e[34m[\e[32m*\e[34m]\e[36m Setting up ${distribution}, please wait...\n\e[0m"
 cat <<- EOF > "${PREFIX}/share/${directory}/etc/ld.so.preload"
 /lib/${multiarch}/libgcc_s.so.1
 EOF
