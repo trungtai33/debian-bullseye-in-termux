@@ -2,29 +2,29 @@
 directory="debian-bullseye"
 distribution="Debian Bullseye"
 if [ -d "${PREFIX}/share/${directory}" ]; then
-printf "\n\e[31mError: distribution ${distribution} is already installed.\n\n\e[0m"
+printf "\n\e[31mError: distribution ${distribution} is already installed.\e[0m\n\n"
 exit
 fi
-printf "\n\e[34m[\e[32m*\e[34m]\e[36m Checking device architecture...\n\e[0m"
+printf "\n\e[34m[\e[32m*\e[34m]\e[36m Checking device architecture...\e[0m\n"
 case $(uname -m) in
 aarch64) arch="arm64v8" multiarch="aarch64-linux-gnu" ;;
 armv7l|armv8l) arch="arm32v7" multiarch="arm-linux-gnueabihf" ;;
 i686) arch="i386" multiarch="i386-linux-gnu" ;;
 x86_64) arch="amd64" multiarch="x86_64-linux-gnu" ;;
 *)
-printf "\e[34m[\e[32m*\e[34m]\e[31m Unsupported architecture.\n\n\e[0m"; exit ;;
+printf "\e[34m[\e[32m*\e[34m]\e[31m Unsupported architecture.\e[0m\n\n"; exit ;;
 esac
 apt update > /dev/null 2>&1
 apt install -y proot > /dev/null 2>&1
 tarball="rootfs.tar.xz"
-printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading ${distribution}, please wait...\n\n\e[34m"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading ${distribution}, please wait...\e[34m\n\n"
 if ! curl --location --output "${tarball}" \
 "https://raw.githubusercontent.com/debuerreotype/docker-debian-artifacts/dist-${arch}/bullseye/rootfs.tar.xz"; then
-printf "\n\e[34m[\e[32m*\e[34m]\e[31m Download failed, please check your network connection.\n\n\e[0m"
+printf "\e[0m\n\e[34m[\e[32m*\e[34m]\e[31m Download failed, please check your network connection.\e[0m\n\n"
 rm -f "${tarball}"
 exit
 fi
-printf "\n\e[34m[\e[32m*\e[34m]\e[36m Installing ${distribution}, please wait...\n\e[0m"
+printf "\e[0m\n\e[34m[\e[32m*\e[34m]\e[36m Installing ${distribution}, please wait...\e[0m\n"
 mkdir -p "${PREFIX}/share/${directory}"
 proot --link2symlink tar -xf "${tarball}" --directory="${PREFIX}/share/${directory}" --exclude='dev'||:
 rm -f "${tarball}"
@@ -206,5 +206,5 @@ com="\$@"; [ -z "\$1" ] && exec \$command || \$command "\$com"
 EOF
 termux-fix-shebang "${PREFIX}/bin/start-${directory}"
 chmod 700 "${PREFIX}/bin/start-${directory}"
-printf "\e[34m[\e[32m*\e[34m]\e[36m Installation finished.\n\n\e[0m"
-printf "\e[36mNow run '\e[32mstart-${directory}\e[36m' to login.\n\n\e[0m"
+printf "\e[34m[\e[32m*\e[34m]\e[36m Installation finished.\e[0m\n\n"
+printf "\e[36mNow run '\e[32mstart-${directory}\e[36m' to login.\e[0m\n\n"
