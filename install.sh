@@ -32,9 +32,9 @@ cat <<- EOF > "${PREFIX}/share/${directory}/etc/ld.so.preload"
 /lib/${multiarch}/libgcc_s.so.1
 EOF
 cat <<- EOF >> "${PREFIX}/share/${directory}/etc/profile"
-export PULSE_SERVER="127.0.0.1"
-export MOZ_FAKE_NO_SANDBOX="1"
 export LANG="C.UTF-8"
+export MOZ_FAKE_NO_SANDBOX="1"
+export PULSE_SERVER="127.0.0.1"
 EOF
 cat <<- EOF > "${PREFIX}/share/${directory}/etc/resolv.conf"
 nameserver 8.8.8.8
