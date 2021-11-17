@@ -15,7 +15,7 @@ x86_64) arch="amd64" multiarch="x86_64-linux-gnu" ;;
 printf "\e[34m[\e[32m*\e[34m]\e[31m Unsupported architecture.\e[0m\n\n"; exit ;;
 esac
 apt update > /dev/null 2>&1
-apt install -y proot > /dev/null 2>&1
+apt install proot -y > /dev/null 2>&1
 tarball="rootfs.tar.xz"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading ${distribution}, please wait...\e[34m\n\n"
 if ! curl --location --output "${tarball}" \
@@ -159,9 +159,6 @@ unevictable_pgs_munlocked 0
 unevictable_pgs_cleared 0
 unevictable_pgs_stranded 0
 EOF
-cat <<- EOF > "${PREFIX}/share/${directory}/proc/.model"
-$(getprop ro.product.brand) $(getprop ro.product.model)
-EOF
 cat <<- EOF > "${PREFIX}/share/${directory}/proc/.version"
 Linux version 5.10.0 (termux@android) (gcc version 4.9 (GCC)) $(uname -v)
 EOF
@@ -197,12 +194,11 @@ fi
 if ! cat /proc/vmstat > /dev/null 2>&1; then
 command+=" --bind=${PREFIX}/share/${directory}/proc/.vmstat:/proc/vmstat"
 fi
-command+=" --bind=${PREFIX}/share/${directory}/proc/.model:/proc/device-tree/model"
 command+=" --bind=${PREFIX}/share/${directory}/proc/.version:/proc/version"
-command+=" /usr/bin/env -i"
-command+=" TERM=\$TERM"
+command+=" /usr/bin/env --ignore-environment"
+command+=" TERM=\${TERM}"
 command+=" /bin/su --login"
-com="\$@"; [ -z "\$1" ] && exec \$command || \$command "\$com"
+com="\$@"; [ -z "\$1" ] && exec \${command} || \${command} "\${com}"
 EOF
 termux-fix-shebang "${PREFIX}/bin/start-${directory}"
 chmod 700 "${PREFIX}/bin/start-${directory}"
