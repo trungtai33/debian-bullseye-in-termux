@@ -179,7 +179,7 @@ command+=" --bind=/proc/self/fd/0:/dev/stdin"
 command+=" --bind=/proc/self/fd/1:/dev/stdout"
 command+=" --bind=/proc/self/fd/2:/dev/stderr"
 command+=" --bind=/sys"
-command+=" --bind=/sdcard"
+command+=" --bind=/storage/self/primary:/sdcard"
 command+=" --bind=/data/data/com.termux"
 command+=" --bind=${PREFIX}/share/${directory}/tmp:/dev/shm"
 if ! cat /proc/loadavg > /dev/null 2>&1; then
