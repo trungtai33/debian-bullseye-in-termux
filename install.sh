@@ -196,7 +196,7 @@ command+=" --bind=${PREFIX}/share/${directory}/proc/.vmstat:/proc/vmstat"
 fi
 command+=" --bind=${PREFIX}/share/${directory}/proc/.version:/proc/version"
 command+=" /usr/bin/env --ignore-environment"
-command+=" TERM=\${TERM}"
+command+=" TERM=\${TERM-xterm-256color}"
 command+=" /bin/su --login"
 com="\$@"; [ -z "\$1" ] && exec \${command} || \${command} "\${com}"
 EOF
