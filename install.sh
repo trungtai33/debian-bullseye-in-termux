@@ -31,7 +31,7 @@ rm -f "${tarball}"
 cat <<- EOF > "${PREFIX}/share/${directory}/etc/ld.so.preload"
 /lib/${multiarch}/libgcc_s.so.1
 EOF
-cat <<- EOF >> "${PREFIX}/share/${directory}/etc/profile"
+cat <<- EOF > "${PREFIX}/share/${directory}/etc/profile.d/config.sh"
 export LANG="C.UTF-8"
 export MOZ_FAKE_NO_SANDBOX="1"
 export PULSE_SERVER="127.0.0.1"
