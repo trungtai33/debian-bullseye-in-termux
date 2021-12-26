@@ -169,7 +169,7 @@ command="proot"
 command+=" --kernel-release=5.10.0"
 command+=" --link2symlink"
 command+=" --kill-on-exit"
-command+=" --rootfs=${PREFIX}/share/${directory}"
+command+=" --rootfs=\${PREFIX}/share/${directory}"
 command+=" --root-id"
 command+=" --bind=/dev"
 command+=" --bind=/dev/urandom:/dev/random"
@@ -181,20 +181,20 @@ command+=" --bind=/proc/self/fd/2:/dev/stderr"
 command+=" --bind=/sys"
 command+=" --bind=/storage/self/primary:/sdcard"
 command+=" --bind=/data/data/com.termux"
-command+=" --bind=${PREFIX}/share/${directory}/tmp:/dev/shm"
+command+=" --bind=\${PREFIX}/share/${directory}/tmp:/dev/shm"
 if ! cat /proc/loadavg > /dev/null 2>&1; then
-command+=" --bind=${PREFIX}/share/${directory}/proc/.loadavg:/proc/loadavg"
+command+=" --bind=\${PREFIX}/share/${directory}/proc/.loadavg:/proc/loadavg"
 fi
 if ! cat /proc/stat > /dev/null 2>&1; then
-command+=" --bind=${PREFIX}/share/${directory}/proc/.stat:/proc/stat"
+command+=" --bind=\${PREFIX}/share/${directory}/proc/.stat:/proc/stat"
 fi
 if ! cat /proc/uptime > /dev/null 2>&1; then
-command+=" --bind=${PREFIX}/share/${directory}/proc/.uptime:/proc/uptime"
+command+=" --bind=\${PREFIX}/share/${directory}/proc/.uptime:/proc/uptime"
 fi
 if ! cat /proc/vmstat > /dev/null 2>&1; then
-command+=" --bind=${PREFIX}/share/${directory}/proc/.vmstat:/proc/vmstat"
+command+=" --bind=\${PREFIX}/share/${directory}/proc/.vmstat:/proc/vmstat"
 fi
-command+=" --bind=${PREFIX}/share/${directory}/proc/.version:/proc/version"
+command+=" --bind=\${PREFIX}/share/${directory}/proc/.version:/proc/version"
 command+=" /usr/bin/env --ignore-environment"
 command+=" TERM=\${TERM-xterm-256color}"
 command+=" /bin/su --login"
