@@ -200,7 +200,6 @@ command+=" TERM=\${TERM-xterm-256color}"
 command+=" /bin/su --login"
 com="\$@"; [ -z "\$1" ] && exec \${command} || \${command} "\${com}"
 EOF
-termux-fix-shebang "${PREFIX}/bin/start-${directory}"
-chmod 700 "${PREFIX}/bin/start-${directory}"
+chmod +x "${PREFIX}/bin/start-${directory}"
 printf "\e[34m[\e[32m*\e[34m]\e[36m Installation finished.\e[0m\n\n"
 printf "\e[36mNow run '\e[32mstart-${directory}\e[36m' to login.\e[0m\n\n"
