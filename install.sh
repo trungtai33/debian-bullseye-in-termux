@@ -14,8 +14,7 @@ x86_64) arch="amd64" multiarch="x86_64-linux-gnu" ;;
 *)
 printf "\e[34m[\e[32m*\e[34m]\e[31m Unsupported architecture.\e[0m\n\n"; exit ;;
 esac
-apt update > /dev/null 2>&1
-apt install proot -y > /dev/null 2>&1
+pkg install proot -y > /dev/null 2>&1
 printf "\e[34m[\e[32m*\e[34m]\e[36m Downloading ${distribution}, please wait...\e[34m\n\n"
 tarball="${directory}.tar.xz"
 if ! curl --location --output "${tarball}" \
